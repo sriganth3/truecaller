@@ -1,14 +1,23 @@
 package truecaller;
 
 public abstract class Account {
+	public ContactTrie getContactTrie() {
+		return contactTrie;
+	}
+
+	public void setContactTrie(ContactTrie contactTrie) {
+		this.contactTrie = contactTrie;
+	}
+
 	private String id;
 	private String phoneNumber;
 	private String userName;
 	private String password;
 	private String email;
-	private UserCategtory userCategory;
+	private UserCategory userCategory;
 	private PersonalInfo personalInfo;
 	private Contact contact;
+	private ContactTrie contactTrie;
 	
 	public Account() {
 		
@@ -64,16 +73,16 @@ public abstract class Account {
 		this.email = email;
 	}
 
-	public UserCategtory getUserCategory() {
+	public UserCategory getUserCategory() {
 		return userCategory;
 	}
 	
-	public void setUserCategory(UserCategtory userCategory) {
+	public void setUserCategory(UserCategory userCategory) {
 		this.userCategory = userCategory;
 	}
 
 	public abstract void register(String firstName, String userName, 
-			String email, String password, String phoneNumber, String countryCode, UserCategtory userCategory);
+			String email, String password, String phoneNumber, String countryCode, UserCategory userCategory);
 
 	public PersonalInfo getPersonalInfo() {
 		return personalInfo;

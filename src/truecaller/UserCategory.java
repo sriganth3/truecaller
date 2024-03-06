@@ -1,7 +1,6 @@
 package truecaller;
 
-public enum UserCategtory {
-
+public enum UserCategory {
 	FREE,
 	BASIC,
 	PREMIUM
