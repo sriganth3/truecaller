@@ -1,7 +1,9 @@
 package truecaller;
 
 import java.util.Map;
+import java.util.Set;
 
+import truecaller.exception.BlockLimitExceedException;
 import truecaller.exception.ContactsExceededException;
 
 public abstract class Account {
@@ -23,6 +25,7 @@ public abstract class Account {
 	private Contact contact;
 	private ContactTrie contactTrie;
 	private Map<String, User> contacts;
+	private Set<String> blockedContacts;
 	
 	public Account() {
 		
@@ -110,10 +113,22 @@ public abstract class Account {
 		this.contacts = contacts;
 	}
 
+	public Set<String> getBlockedContacts() {
+		return blockedContacts;
+	}
+
+	public void setBlockedContacts(Set<String> blockedContacts) {
+		this.blockedContacts = blockedContacts;
+	}
+
 	public abstract void register(String firstName, String userName, 
 			String email, String password, String phoneNumber, String countryCode, UserCategory userCategory);
 	
 	public abstract void addContact(User user) throws ContactsExceededException;
+	
+	public abstract void blockContact(String number) throws BlockLimitExceedException;
+	
+	public abstract boolean isBlocked(String number);
 
 	
 }
