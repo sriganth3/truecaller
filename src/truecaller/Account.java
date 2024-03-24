@@ -1,5 +1,9 @@
 package truecaller;
 
+import java.util.Map;
+
+import truecaller.exception.ContactsExceededException;
+
 public abstract class Account {
 	public ContactTrie getContactTrie() {
 		return contactTrie;
@@ -18,6 +22,7 @@ public abstract class Account {
 	private PersonalInfo personalInfo;
 	private Contact contact;
 	private ContactTrie contactTrie;
+	private Map<String, User> contacts;
 	
 	public Account() {
 		
@@ -81,9 +86,6 @@ public abstract class Account {
 		this.userCategory = userCategory;
 	}
 
-	public abstract void register(String firstName, String userName, 
-			String email, String password, String phoneNumber, String countryCode, UserCategory userCategory);
-
 	public PersonalInfo getPersonalInfo() {
 		return personalInfo;
 	}
@@ -99,6 +101,19 @@ public abstract class Account {
 	public void setContact(Contact contact) {
 		this.contact = contact;
 	}
+	
+	public Map<String, User> getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(Map<String, User> contacts) {
+		this.contacts = contacts;
+	}
+
+	public abstract void register(String firstName, String userName, 
+			String email, String password, String phoneNumber, String countryCode, UserCategory userCategory);
+	
+	public abstract void addContact(User user) throws ContactsExceededException;
 
 	
 }

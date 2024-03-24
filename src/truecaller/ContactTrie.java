@@ -1,5 +1,8 @@
 package truecaller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ContactTrie {
 
 	private TrieNode root;
@@ -8,6 +11,23 @@ public class ContactTrie {
 	public ContactTrie() {
 		this.root = new TrieNode();
 	}
+
+	public TrieNode getRoot() {
+		return root;
+	}
+
+	public void setRoot(TrieNode root) {
+		this.root = root;
+	}
+
+	public int getIndexOfSingleChild() {
+		return indexOfSingleChild;
+	}
+
+	public void setIndexOfSingleChild(int indexOfSingleChild) {
+		this.indexOfSingleChild = indexOfSingleChild;
+	}
+	
 	
 	public void insert(String key) {
 		TrieNode node = root;
@@ -25,21 +45,42 @@ public class ContactTrie {
 		
 		node.setLeaf(true);
 	}
-
-	public TrieNode getRoot() {
-		return root;
+	
+	public List<String> allWordsWithPrefix(String prefix){
+		TrieNode trieNode = root;
+		List<String> allWords = new ArrayList<>();
+		
+		for(int i = 0; i < prefix.length(); i++) {
+			if(trieNode == null) {
+				return allWords;
+			}
+			int ascii = prefix.charAt(i);
+			trieNode = trieNode.getChildren()[ascii];
+		}
+		
+		getSuffixes(trieNode, prefix, allWords);
+		
+		return allWords;
 	}
 
-	public void setRoot(TrieNode root) {
-		this.root = root;
-	}
-
-	public int getIndexOfSingleChild() {
-		return indexOfSingleChild;
-	}
-
-	public void setIndexOfSingleChild(int indexOfSingleChild) {
-		this.indexOfSingleChild = indexOfSingleChild;
+	private void getSuffixes(TrieNode trieNode, String prefix, List<String> allWords) {
+		if(trieNode == null) {
+			return;
+		}
+		
+		if(trieNode.isLeaf()) {
+			allWords.add(prefix);
+		}
+		
+		for(TrieNode child: trieNode.getChildren()) {
+			if(child == null) {
+				continue;
+			}
+			
+			char childCharacter = child.getCharacter();
+			getSuffixes(child, prefix + childCharacter, allWords);
+		}
+		
 	}
 	
 	
