@@ -1,4 +1,4 @@
-package truecaller.common;
+package com.truecaller.common;
 
 public class Constants {
 

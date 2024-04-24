@@ -1,13 +1,13 @@
-package truecaller;
+package com.truecaller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
 
-import truecaller.common.Constants;
-import truecaller.exception.BlockLimitExceedException;
-import truecaller.exception.ContactsExceededException;
+import com.truecaller.common.Constants;
+import com.truecaller.exception.BlockLimitExceedException;
+import com.truecaller.exception.ContactsExceededException;
 
 public class User extends Account {
 
