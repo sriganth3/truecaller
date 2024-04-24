@@ -1,9 +1,9 @@
-package truecaller;
+package com.truecaller;
 
 import java.util.List;
 
-import truecaller.exception.BlockLimitExceedException;
-import truecaller.exception.ContactsExceededException;
+import com.truecaller.exception.BlockLimitExceedException;
+import com.truecaller.exception.ContactsExceededException;
 
 public class TrueCallerApplication {
 	

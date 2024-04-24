@@ -1,10 +1,10 @@
-package truecaller;
+package com.truecaller;
 
 import java.util.Map;
 import java.util.Set;
 
-import truecaller.exception.BlockLimitExceedException;
-import truecaller.exception.ContactsExceededException;
+import com.truecaller.exception.BlockLimitExceedException;
+import com.truecaller.exception.ContactsExceededException;
 
 public abstract class Account {
 	public ContactTrie getContactTrie() {

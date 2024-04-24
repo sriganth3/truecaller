@@ -1,4 +1,4 @@
-package truecaller.exception;
+package com.truecaller.exception;
 
 public class ContactsExceededException extends Exception {
 

@@ -1,4 +1,4 @@
-package truecaller;
+package com.truecaller;
 
 public class Contact {
 	private String countryCode;
