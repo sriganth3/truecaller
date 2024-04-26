@@ -14,5 +14,7 @@ public class Constants {
 	
 	public static final int MAX_PREMIUM_USER_BLOCKED_CONTACTS = 1000;
 	
+	public static final int MAX_GLOBAL_SPAM_COUNT = 100_000_000;
+	
 	
 }

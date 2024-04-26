@@ -55,6 +55,15 @@ public class TrueCallerApplication {
 		System.out.println("Checking for blocked number: ");
 		System.out.println(account.isBlocked("4447756701"));
 		
+		// Report Spam
+		System.out.println("Report Spam");
+		account.reportSpam("4447770002", "Spam Advertisement");
+		
+		// Receive call
+		System.out.println("Report Spam : " + account.canRecieve("4447756702"));
+		
+		
+		
 		
 	}
 }

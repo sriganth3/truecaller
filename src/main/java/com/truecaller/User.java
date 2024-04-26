@@ -1,13 +1,13 @@
 package com.truecaller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.UUID;
 
 import com.truecaller.common.Constants;
 import com.truecaller.exception.BlockLimitExceedException;
 import com.truecaller.exception.ContactsExceededException;
+
+import orestes.bloomfilter.FilterBuilder;
 
 public class User extends Account {
 
@@ -35,6 +35,7 @@ public class User extends Account {
 		this.setUserCategory(userCategory);
 		init(userCategory);
 		insertToTries(phoneNumber, firstName);
+		this.setGlobalSpam(new GlobalSpam());
 
 
 	}
@@ -43,15 +44,19 @@ public class User extends Account {
 		switch(userCategory) {
 		case FREE:
 			this.setContacts(new HashMap<>(Constants.MAX_FREE_USER_CONTACTS));
-			this.setBlockedContacts(new HashSet<>(Constants.MAX_FREE_USER_CONTACTS));
+			
+			this.setBlockedContacts(new FilterBuilder(Constants.MAX_FREE_USER_BLOCKED_CONTACTS, .01)
+                    .buildCountingBloomFilter());
 			break;
 		case BASIC:
 			this.setContacts(new HashMap<>(Constants.MAX_BASIC_USER_CONTACTS));
-			this.setBlockedContacts(new HashSet<>(Constants.MAX_FREE_USER_CONTACTS));
+			this.setBlockedContacts(new FilterBuilder(Constants.MAX_BASIC_USER_CONTACTS, .01)
+                    .buildCountingBloomFilter());
 			break;
 		case PREMIUM:
 			this.setContacts(new HashMap<>(Constants.MAX_PREMIUM_USER_CONTACTS));
-			this.setBlockedContacts(new HashSet<>(Constants.MAX_FREE_USER_CONTACTS));
+			this.setBlockedContacts(new FilterBuilder(Constants.MAX_PREMIUM_USER_CONTACTS, .01)
+                    .buildCountingBloomFilter());
 			break;
 		}
 		
@@ -119,6 +124,23 @@ public class User extends Account {
 	public boolean isBlocked(String number) {
 		return this.getBlockedContacts().contains(number);
 	}
+
+	@Override
+	public boolean canRecieve(String number) {
+		
+		return !this.getBlockedContacts().contains(number) && !this.getGlobalSpam().isGlobalSpam(number);
+	}
+
+	@Override
+	public void reportSpam(String number, String reason) {
+		
+		this.getBlockedContacts().add(number);
+		this.getGlobalSpam().reportSpam(number, this.getPhoneNumber(), reason);
+	}
+	
+	
+	
+	
 
 
 

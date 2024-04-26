@@ -6,6 +6,8 @@ import java.util.Set;
 import com.truecaller.exception.BlockLimitExceedException;
 import com.truecaller.exception.ContactsExceededException;
 
+import orestes.bloomfilter.CountingBloomFilter;
+
 public abstract class Account {
 	public ContactTrie getContactTrie() {
 		return contactTrie;
@@ -25,7 +27,8 @@ public abstract class Account {
 	private Contact contact;
 	private ContactTrie contactTrie;
 	private Map<String, User> contacts;
-	private Set<String> blockedContacts;
+	private CountingBloomFilter<String> blockedContacts;
+	private GlobalSpam globalSpam;
 	
 	public Account() {
 		
@@ -113,12 +116,20 @@ public abstract class Account {
 		this.contacts = contacts;
 	}
 
-	public Set<String> getBlockedContacts() {
+	public CountingBloomFilter<String> getBlockedContacts() {
 		return blockedContacts;
 	}
 
-	public void setBlockedContacts(Set<String> blockedContacts) {
+	public void setBlockedContacts(CountingBloomFilter<String> blockedContacts) {
 		this.blockedContacts = blockedContacts;
+	}
+
+	public GlobalSpam getGlobalSpam() {
+		return globalSpam;
+	}
+
+	public void setGlobalSpam(GlobalSpam globalSpam) {
+		this.globalSpam = globalSpam;
 	}
 
 	public abstract void register(String firstName, String userName, 
@@ -129,6 +140,10 @@ public abstract class Account {
 	public abstract void blockContact(String number) throws BlockLimitExceedException;
 	
 	public abstract boolean isBlocked(String number);
+	
+	public abstract boolean canRecieve(String number);
+	
+	public abstract void reportSpam(String number, String reason);
 
 	
 }
